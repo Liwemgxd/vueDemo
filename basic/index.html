@@ -15,18 +15,31 @@
         Vue.createApp({
             data() {
                 return {
+                    show: true,
                     content: 'hello world'
                 }
+            },
+            mounted(){
+                setInterval(()=>{
+                    this.methods.handleBtnClick();
+                    // this.content = this.content.split('').reverse().join('');
+                }, 1000)
             },
             methods:{
                 handleBtnClick(){
                     this.content = this.content.split('').reverse().join('')
+                },
+                handleBtnClick1(){
+                    this.show = !this.show;
                 }
             },
             template: `
                 <div>
-                    {{content}}
+                    <span v-if="show">{{content}}</span>
+                    <div></div>
                     <button v-on:click="handleBtnClick">反转</button>
+                    <div></div>
+                    <button v-on:click="handleBtnClick1">显示/隐藏</button>
                 </div>`
         }).mount('#root')
     </script>

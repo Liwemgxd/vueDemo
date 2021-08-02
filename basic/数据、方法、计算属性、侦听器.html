@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hello world</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+<div id="root">初始内容</div>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                show: true,
+                content: 'hello world',
+                count: 5,
+                price: 5,
+                watchTotal: 10
+            }
+        },
+        watch: {
+            price() {
+                setTimeout(() => {
+                    console.log('price changed')
+                }, 3000)
+            },
+            count(current, prev){
+                this.watchTotal = current * this.price;
+            }
+        },
+        computed: {
+            //当计算属性依赖的内容发生变更时，才会重新执行计算
+           total(){
+               return this.count * this.price;
+           }
+        },
+        method: {
+            //只要页面重新渲染，就会重新计算
+            getTotal(){
+                return this.count * this.price;
+            }
+        },
+        template: `
+          <div v-if="show">{{watchTotal}}</div>
+        `
+    });
+    const vm = app.mount('#root');
+</script>
+</body>
+</html>

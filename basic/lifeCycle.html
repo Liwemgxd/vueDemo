@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hello world</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+<div id="root">初始内容</div>
+<script>
+    console.log(document.getElementById('root').innerHTML); //初始内容
+    const app = Vue.createApp({
+        data() {
+            return {
+                show: true,
+                content: 'hello world'
+            }
+        },
+        //在实例生成之前
+        beforeCreate(){
+            console.log('before create')  ;
+        },
+        //在实例生成之后
+        created(){
+            console.log('created');
+        },
+        //在模板编译成函数之后，在组件内容被渲染到页面之前
+        beforeMount(){
+            console.log(document.getElementById('root').innerHTML);  //什么都没有，内容为空
+            console.log('before mount');
+        },
+        //在组件内容被渲染到页面之后
+        mounted(){
+            console.log(document.getElementById('root').innerHTML)
+            console.log('mounted');
+        },
+        //当data中的数据发生变化时
+        beforeUpdate(){
+            console.log('before update')
+        },
+        //当数据发生变化，并且页面重新渲染完成后
+        updated(){
+            console.log('updated')
+        },
+        //当vue应用失效时
+        beforeUnmount(){
+            console.log('before unmount')
+        },
+        //当vue应用失效，且dom完全销毁之后
+        unmounted(){
+            console.log('unmounted')
+        },
+        template: `
+                <div>{{content}}</div>`
+    });
+    const vm = app.mount('#root');
+    app.unmount();
+</script>
+</body>
+</html>
