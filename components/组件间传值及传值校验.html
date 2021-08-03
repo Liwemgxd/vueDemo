@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hello world</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+<div id="root">初始内容</div>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                num: 1234
+            }
+        },
+
+        template: `
+          <div>
+            <test v-bind:content="num"/>
+          </div>`
+    });
+
+    app.component('test', {
+        props: {
+            content: {
+                type: Number,
+                validator: (value) => {
+                    return value < 1000
+                }
+            }
+        },
+        template: `<div>{{content}}</div>`
+    })
+    const vm = app.mount('#root');
+</script>
+</body>
+</html>

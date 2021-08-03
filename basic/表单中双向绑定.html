@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hello world</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+<div id="root">初始内容</div>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                show: true,
+                content: 'hello world',
+            }
+        },
+
+        template: `
+          <div v-if="show">
+            <span>{{content}}</span>
+            <input v-model="content">
+            <textarea v-model="content"/>
+          </div>
+          <div>
+            <select v-model="select" multiple>
+              <option value="A">A</option>
+              <option value="B">B</option>
+            </select>
+          </div>
+          <div>
+            <input type="checkbox" v-model="content" true-value="hello" false-value="no hello"/> {{content}}
+          </div>`
+    });
+    const vm = app.mount('#root');
+</script>
+</body>
+</html>
