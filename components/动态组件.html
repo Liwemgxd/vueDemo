@@ -13,33 +13,34 @@
 <div id="root">初始内容</div>
 <script>
     const app = Vue.createApp({
-        data() {
+        data(){
             return {
-                count: 1
+                currentItem: 'common-item'
             }
         },
         methods: {
-          handleAdd(param){
-              this.count += param;
+          handleClick(){
+              this.currentItem = this.currentItem === 'input-item'? 'common-item' : 'input-item';
           }
         },
         template: `
-          <div>
-            <counter :count="count" @add="handleAdd"/>
-          </div>`
+            <keep-alive>
+              <component :is="currentItem"/>
+            </keep-alive>
+            <button @click="handleClick">切换</button>
+        `
     });
 
-    app.component('counter', {
-        props: ['count'],
-        emits: ['add'],
-        methods: {
-          handleClick(){
-              this.$emit('add', 2)
-          }
-        },
-        template: `<div @click="handleClick">{{count}}</div>`
+    app.component('input-item', {
+        template: `
+           <input/>
+        `
     });
-
+    app.component('common-item', {
+        template: `
+           <div>hello world</div>
+        `
+    })
     const vm = app.mount('#root');
 </script>
 </body>

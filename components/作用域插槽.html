@@ -13,33 +13,27 @@
 <div id="root">初始内容</div>
 <script>
     const app = Vue.createApp({
-        data() {
-            return {
-                count: 1
-            }
-        },
-        methods: {
-          handleAdd(param){
-              this.count += param;
-          }
-        },
+
         template: `
           <div>
-            <counter :count="count" @add="handleAdd"/>
+            <list v-slot="{item}">
+                 <div>{{item}}</div>
+            </list>
           </div>`
     });
 
-    app.component('counter', {
-        props: ['count'],
-        emits: ['add'],
-        methods: {
-          handleClick(){
-              this.$emit('add', 2)
-          }
+    app.component('list', {
+        data(){
+            return {
+                list: [1,2,3]
+            }
         },
-        template: `<div @click="handleClick">{{count}}</div>`
-    });
-
+        template: `
+          <div>
+            <slot v-for="item in list" :item="item" ></slot>
+          </div>
+        `
+    })
     const vm = app.mount('#root');
 </script>
 </body>

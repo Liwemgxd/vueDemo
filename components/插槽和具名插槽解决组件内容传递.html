@@ -15,31 +15,27 @@
     const app = Vue.createApp({
         data() {
             return {
-                count: 1
             }
         },
-        methods: {
-          handleAdd(param){
-              this.count += param;
-          }
-        },
+
         template: `
           <div>
-            <counter :count="count" @add="handleAdd"/>
+            <myform/>
           </div>`
     });
 
-    app.component('counter', {
-        props: ['count'],
-        emits: ['add'],
+    app.component('myform', {
         methods: {
           handleClick(){
-              this.$emit('add', 2)
+              alert(123);
           }
         },
-        template: `<div @click="handleClick">{{count}}</div>`
-    });
-
+        template: `
+                <div>
+                    <input/>
+                    <button @click="handleClick">提交</button>
+                </div>`
+    })
     const vm = app.mount('#root');
 </script>
 </body>

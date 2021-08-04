@@ -18,26 +18,20 @@
                 count: 1
             }
         },
-        methods: {
-          handleAdd(param){
-              this.count += param;
-          }
-        },
         template: `
           <div>
-            <counter :count="count" @add="handleAdd"/>
+            <counter v-model="count"/>
           </div>`
     });
 
     app.component('counter', {
-        props: ['count'],
-        emits: ['add'],
+        props: ['modelValue'],
         methods: {
-          handleClick(){
-              this.$emit('add', 2)
-          }
+            handleClick(){
+                this.$emit('update:modelValue', this.modelValue+3);
+            }
         },
-        template: `<div @click="handleClick">{{count}}</div>`
+        template: `<div @click="handleClick">{{modelValue}}</div>`
     });
 
     const vm = app.mount('#root');

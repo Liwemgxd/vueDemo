@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hello world</title>
+    <style>
+        @keyframes leftToRight {
+            0%{
+                transform: translateX(100px);
+            }
+            50%{
+                transform: translateX(50px);
+            }
+            0%{
+                transform: translateX(0px);
+            }
+        }
+        
+        .animation {
+            animation: leftToRight 3s ease infinite;
+        }
+        .transition{
+            transition: 3s background-color ease;
+        }
+        .green{
+            background-color: green;
+        }
+        .blue{
+            background-color: blue;
+        }
+    </style>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+<div id="root"></div>
+<script>
+    const app = Vue.createApp({
+        data(){
+          return {
+              animate: {
+                  animation: true,
+
+              },
+              transit: {
+                  transition: true,
+                  blue: true,
+                  green: false
+              }
+          }
+        },
+        methods: {
+            handleBtnClick(){
+                this.transit.blue = !this.transit.blue;
+                this.transit.green = !this.transit.green;
+            },
+            handleBtnClick1() {
+                this.animate.animation = !this.animate.animation;
+            }
+        },
+        template: `
+          <div :class="animate">动画</div>
+          <div :class="transit">过渡</div>
+
+          <button @click="handleBtnClick">改颜色</button>
+          <button @click="handleBtnClick1">不要动</button>
+        `
+    });
+
+    const vm = app.mount('#root')
+</script>
+</body>
+
+</html>

@@ -10,37 +10,33 @@
 </head>
 
 <body>
-<div id="root">初始内容</div>
+<div id="root"></div>
 <script>
     const app = Vue.createApp({
         data() {
             return {
-                count: 1
+
             }
         },
-        methods: {
-          handleAdd(param){
-              this.count += param;
-          }
+        mounted(){
+          // this.$refs.input.focus();
         },
         template: `
-          <div>
-            <counter :count="count" @add="handleAdd"/>
-          </div>`
+                <div>
+                    <input v-focus/>
+                    <button @click="handleBtnClick1">增加</button>
+                </div>`
     });
 
-    app.component('counter', {
-        props: ['count'],
-        emits: ['add'],
-        methods: {
-          handleClick(){
-              this.$emit('add', 2)
-          }
-        },
-        template: `<div @click="handleClick">{{count}}</div>`
-    });
+    app.directive('focus', {
+        mounted(el) {
+            el.focus();
+        }
+    })
+
 
     const vm = app.mount('#root');
 </script>
 </body>
+
 </html>

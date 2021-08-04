@@ -10,37 +10,32 @@
 </head>
 
 <body>
-<div id="root">初始内容</div>
+<div id="root"></div>
 <script>
+    const myMixin = {
+        data() {
+            return {
+                number: 2
+            }
+        }
+    }
     const app = Vue.createApp({
         data() {
             return {
-                count: 1
+
             }
         },
-        methods: {
-          handleAdd(param){
-              this.count += param;
-          }
+        mixins: [myMixin],
+        methods:{
         },
         template: `
-          <div>
-            <counter :count="count" @add="handleAdd"/>
-          </div>`
+                <div>
+                    <div>{{number}}</div>
+                    <button @click="handleBtnClick1">增加</button>
+                </div>`
     });
-
-    app.component('counter', {
-        props: ['count'],
-        emits: ['add'],
-        methods: {
-          handleClick(){
-              this.$emit('add', 2)
-          }
-        },
-        template: `<div @click="handleClick">{{count}}</div>`
-    });
-
     const vm = app.mount('#root');
 </script>
 </body>
+
 </html>
