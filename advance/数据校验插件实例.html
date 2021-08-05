@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hello world</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+<div id="root"></div>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                name: 'liwemg',
+                age: 24
+            }
+        },
+        rules: {
+            age: {
+                validate: age => age>25,
+                message: 'too young'
+            },
+            name: {
+                validate: name => name.length >= 4,
+                message: 'too short'
+            }
+        },
+        mounted(){
+            // this.$refs.input.focus();
+        },
+        template: `
+                <div>
+                    name: {{name}}, age{{age}}
+                </div>`
+    });
+
+    //使用插件对mixin做一个封装，通过插件变量命名可以清楚的知道mixin在做什么，便于维护
+    const validatorPlugin = {
+        install(app, options){
+            app.mixin({
+                created(){
+                    for(let key in this.$options.rules){
+                        const item = this.$options.rules[key];
+                        this.$watch(key, (value)=>{
+                            const result = item.validate(value);
+                            if (!result){
+                                console.log(item.message);
+                            }
+                        })
+
+                    }
+                }
+            })
+        }
+    }
+    app.use(validatorPlugin);
+
+    // app.mixin({
+    //     created(){
+    //         for(let key in this.$options.rules){
+    //             const item = this.$options.rules[key];
+    //             this.$watch(key, (value)=>{
+    //                 const result = item.validate(value);
+    //                 if (!result){
+    //                     console.log(item.message);
+    //                 }
+    //             })
+    //
+    //         }
+    //
+    //     }
+    // })
+
+    const vm = app.mount('#root');
+</script>
+</body>
+
+</html>
