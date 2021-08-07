@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hello world</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+<div id="root">初始内容</div>
+<script>
+
+    const app = Vue.createApp({
+        data() {
+            return {
+            }
+        },
+        methods: {
+        },
+        mounted(){
+        },
+        // template: `
+        //   <div>
+        //     {{nameObj.name}}
+        //   </div>`,
+        template: `<div>{{name}}</div>`,
+        //通过proxy对数据进行封装，当数据变化时，触发模板等内容的更新
+        setup(prpos, context){
+            /**
+             * 写法一：ref处理基础类型的数据
+             */
+            // const {ref} = Vue;
+            // //proxy, 'liwemg'变成 proxy({value: 'dell})响应式引用
+            // let name = ref('liwemg');
+            // setTimeout(()=>{
+            //     name.value = 'weming';
+            // }, 3000)
+            // return {
+            //     name,
+            // }
+
+            /**
+             * 写法二：reactive处理非基础类型的数据
+             */
+            const {reactive, toRefs} = Vue;
+            //proxy, {name: 'liwemg'}变成 proxy({name: 'liwemg'})响应式引用
+            const nameObj = reactive({name: 'liwemg'});
+            setTimeout(()=>{
+                nameObj.name = 'weming'
+            }, 2000);
+            /**
+             * nameObj变成响应式，但是字段name不是，toRefs是让内部字段也变成响应式
+             */
+            const {name} = toRefs(nameObj);
+            return {
+                // nameObj
+                name
+            }
+        }
+
+    });
+    const vm = app.mount('#root');
+</script>
+</body>
+</html>

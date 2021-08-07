@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hello world</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+<div id="root">初始内容</div>
+<script>
+    const app = Vue.createApp({
+        template: `
+          <div @click="handleClick">
+            <child>parent</child>
+          </div>`,
+    });
+    app.component('child', {
+        // template: `<div>child</div>`,
+        //当组件什么都没有，只有一个setup函数时，就会按照return的虚拟dom渲染
+        setup(props, context){
+            console.log(context)
+            const {h} = Vue;
+            const {attrs, slots, emit} = context;
+            console.log(slots.default())
+            return () => h('div', {}, slots.default());
+        }
+    })
+
+    const vm = app.mount('#root');
+</script>
+</body>
+</html>

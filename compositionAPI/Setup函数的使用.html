@@ -19,25 +19,29 @@
             }
         },
         methods: {
-          handleAdd(param){
-              this.count += param;
-          }
+            test(){
+                console.log(this.$options.setup().handleClick());
+            }
+        },
+        mounted(){
+          this.test();
         },
         template: `
-          <div>
-            <counter :count="count" @add-liwemg="handleAdd"/>
-          </div>`
-    });
+          <div @click="handleClick">
+            {{name}}
+          </div>`,
 
-    app.component('counter', {
-        props: ['count'],
-        emits: ['addLiwemg'],
-        methods: {
-          handleClick(){
-              this.$emit('addLiwemg', 2)
-          }
-        },
-        template: `<div @click="handleClick">{{count}}</div>`
+        //created 实例被完全初始化之前
+        setup(prpos, context){   //这里不能使用this， 因为app 还没有实例化
+            return {
+                name: 'liwemg',
+                handleClick: ()=>{
+                    console.log('liwemg');
+                }
+            }
+        }
+
+
     });
 
     const vm = app.mount('#root');
